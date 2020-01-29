@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Unique key of the Deployment instance
+  name: mongodb
+spec:
+  # number of Pods should exist at all times.
+   replicas: 1
+   selector:
+     matchLabels: # we need this in case of replicaset/deployments
+      app: mongodb
+   template: # template for pod
+    metadata:
+      name: mongodb # optional when you put in replica set/deployment
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo:3.6.5-jessie
+        volumeMounts:
+          - name: mongo-persistent-storage
+            mountPath: /data/db
+      volumes:
+        - name: mongo-persistent-storage
+          hostPath:
+            # this is the host machine where the container/pod is running , in our case virtualbox
+            path: /mnt/some/directory/structure/
+            # DirectoryOrCreate will create a directory if it doesnot exists
+            type: DirectoryOrCreate
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fleetman-mongodb
+spec:
+  selector:
+    app: mongodb
+  ports:
+    - name: mongoport
+      port: 27017
+  type: ClusterIP
