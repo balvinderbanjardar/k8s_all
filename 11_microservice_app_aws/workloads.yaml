@@ -111,7 +111,7 @@ metadata:
   name: webapp
 spec:
   # number of Pods should exist at all times.
-   replicas: 1
+   replicas: 2
    selector:
      matchLabels: # we need this in case of replicaset/deployments
       app: webapp
