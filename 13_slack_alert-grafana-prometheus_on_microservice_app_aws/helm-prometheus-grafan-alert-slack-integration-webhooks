@@ -59,3 +59,8 @@ kubectl edit -n monitoring service/service/monitoring-grafana
 
 https://github.com/helm/charts/tree/master/stable/prometheus-operator
 grafana.adminPassword	: prom-operator
+
+
+Access services - using Kube API Load Balancer
+-----------------------------------------------
+https://<LoadBalancer-DBS>/api/v1/namespaces/monitoring/services/alertmanager-operated:9093/proxy/#/alerts
