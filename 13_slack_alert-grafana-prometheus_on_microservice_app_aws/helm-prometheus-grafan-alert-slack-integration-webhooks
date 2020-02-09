@@ -1,0 +1,61 @@
+Install helm: (which helps in installing prometheus , Grafana)
+--------------------------------------------------------------
+
+https://github.com/helm/helm/releases/tag/v2.14.3
+
+wget https://get.helm.sh/helm-v2.14.3-linux-amd64.tar.gz
+
+tar zxvf helm-v2.14.3-linux-amd64.tar.gz
+
+sudo mv ./linux-amd64/helm /usr/local/bin/
+
+rm helm-v2.14.3-linux-amd64.tar.gz
+
+rm -rf ./linux-amd64/
+
+helm init --upgrade
+
+helm version
+
+helm repo update
+
+
+Fix Helm Previligies:
+--------------------
+kubectl create serviceaccount --namespace kube-system tiller
+
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+
+kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
+
+
+-------------------------
+helm repo update
+helm version
+
+
+Step to install prometheus + grafana:
+------------------------------------
+helm install --name monitoring --namespace monitoring stable/prometheus-operator
+
+:( :( Another way : Dont follow this: :( :(
+----------------------------------------
+helm repo add coreos https://s3-eu-west-1.amazonaws.com/coreos-charts/stable/
+helm install coreos/prometheus-operator --name prometheus-operator --namespace monitoring
+helm install coreos/kube-prometheus --name kube-prometheus --namespace monitoring
+----------------------------------------------------------------------------------
+
+kubectl get all -n monitoring
+
+kubectl edit -n monitoring service/monitoring-prometheus-oper-prometheus
+-- Here convert the type from ClusterIP to LoadBalancer , save and exit
+
+Undo the previous step(Change back to ClusterIP ) after testing prometheus- UI
+
+
+kubectl edit -n monitoring service/service/monitoring-grafana
+-- Here convert the type from ClusterIP to LoadBalancer , save and exit
+
+
+https://github.com/helm/charts/tree/master/stable/prometheus-operator
+grafana.adminPassword	: prom-operator
