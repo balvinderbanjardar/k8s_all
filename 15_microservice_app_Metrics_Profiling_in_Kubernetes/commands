@@ -8,8 +8,14 @@ minikube status
 minikube stop
 minikube delete
 
-
-
+minikube addons list
+minikube addons enable metrics-server
 
 Kubectl Commands:
 -----------------
+alias k=kubectl
+
+kubectl top pod
+k top node
+
+k get all -n kube-system  // when you excute this you will find a pod and service created for metrics-server
