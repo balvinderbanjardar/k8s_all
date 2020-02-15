@@ -1,0 +1,32 @@
+# What volume/storage we want
+# this is virtual storage , allocated from physical(PV) storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pvc
+spec:
+  storageClassName: mylocalstorage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+# How do we want it to be implemented
+# This is physical storage
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-storage
+spec:
+  storageClassName: mylocalstorage
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    # this is the host machine where the container/pod is running , in our case virtualbox
+    path: /mnt/someNew/directory/structure/
+    # DirectoryOrCreate will create a directory if it doesnot exists
+    type: DirectoryOrCreate
