@@ -9,6 +9,9 @@ minikube stop
 minikube delete
 
 
+
+
 Kubectl Commands:
 -----------------
+
 
