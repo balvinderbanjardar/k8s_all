@@ -1,0 +1,14 @@
+Minikube commands:
+-----------------
+minikube start --memory 6144
+minikube docker-env
+eval $(minikube docker-env)
+minikube ip
+minikube status
+minikube stop
+minikube delete
+
+
+Kubectl Commands:
+-----------------
+
