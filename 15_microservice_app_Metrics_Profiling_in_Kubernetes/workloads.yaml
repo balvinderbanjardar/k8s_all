@@ -18,11 +18,12 @@ spec:
       containers:
       - name: queue
         #image: richardchesterwood/k8s-fleetman-queue:release1
-        image: richardchesterwood/k8s-fleetman-queue:release2
+        #image: richardchesterwood/k8s-fleetman-queue:release2
+        image: richardchesterwood/k8s-fleetman-queue:resources  # this has initial memory or Xmx50m set for better performance and to occupy less java process memory which in turn optimizes the pod/container memory
         resources:
           requests: # *** specifying requests is a good practice ***
-            memory: 300Mi # 1Mi = 1024Ki   1Ki = 1024bytes
-                          # 1M = 1000K   1K = 1000bytes
+            memory: 50Mi
+            cpu: 100m
 
 ---
 
@@ -46,7 +47,8 @@ spec:
       containers:
       - name: position-simulator
         #image: richardchesterwood/k8s-fleetman-position-simulator:release1
-        image: richardchesterwood/k8s-fleetman-position-simulator:release2
+        #image: richardchesterwood/k8s-fleetman-position-simulator:release2
+        image: richardchesterwood/k8s-fleetman-position-simulator:resources  # this has initial memory or Xmx50m set for better performance
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: production-microservice
@@ -74,7 +76,8 @@ spec:
       - name: position-tracker
         #image: richardchesterwood/k8s-fleetman-position-tracker:release1
         #image: richardchesterwood/k8s-fleetman-position-tracker:release2
-        image: richardchesterwood/k8s-fleetman-position-tracker:release3
+        #image: richardchesterwood/k8s-fleetman-position-tracker:release3
+        image: richardchesterwood/k8s-fleetman-position-tracker:resources  # this has initial memory or Xmx50m set for better performance
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: production-microservice
@@ -101,7 +104,8 @@ spec:
       containers:
       - name: api-gateway
         #image: richardchesterwood/k8s-fleetman-api-gateway:release1
-        image: richardchesterwood/k8s-fleetman-api-gateway:release2
+        #image: richardchesterwood/k8s-fleetman-api-gateway:release2
+        image: richardchesterwood/k8s-fleetman-api-gateway:resources  # this has initial memory or Xmx50m set for better performance
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: production-microservice
