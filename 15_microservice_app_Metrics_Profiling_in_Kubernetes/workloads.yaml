@@ -22,7 +22,7 @@ spec:
         image: richardchesterwood/k8s-fleetman-queue:resources  # this has initial memory or Xmx50m set for better performance and to occupy less java process memory which in turn optimizes the pod/container memory
         resources:
           requests: # *** specifying requests is a good practice ***
-            memory: 50Mi
+            memory: 300Mi # this is set based on analysis using kubectl top pod , and decided this to be good memory value to be set
             cpu: 100m
 
 ---
@@ -52,6 +52,10 @@ spec:
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: production-microservice
+        resources:
+          requests: # *** specifying requests is a good practice ***
+            memory: 200Mi # this is set based on analysis using kubectl top pod , and decided this to be good memory value to be set
+            cpu: 50m # this is set based on analysis using kubectl top pod , and decided this to be good cpu value to be set
 
 ---
 
@@ -81,6 +85,10 @@ spec:
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: production-microservice
+        resources:
+          requests: # *** specifying requests is a good practice ***
+            memory: 250Mi # this is set based on analysis using kubectl top pod , and decided this to be good memory value to be set
+            cpu: 50m # this is set based on analysis using kubectl top pod , and decided this to be good cpu value to be set
 
 ---
 
@@ -109,6 +117,10 @@ spec:
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: production-microservice
+        resources:
+          requests: # *** specifying requests is a good practice ***
+            memory: 300Mi  # this is set based on analysis using kubectl top pod , and decided this to be good memory value to be set
+            cpu: 50m # this is set based on analysis using kubectl top pod , and decided this to be good cpu value to be set
 
 ---
 
@@ -136,3 +148,7 @@ spec:
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: production-microservice
+        resources:
+          requests: # *** specifying requests is a good practice ***
+            memory: 100Mi  # this is set based on analysis using kubectl top pod , and decided this to be good memory value to be set
+            cpu: 50m # this is set based on analysis using kubectl top pod , and decided this to be good cpu value to be set

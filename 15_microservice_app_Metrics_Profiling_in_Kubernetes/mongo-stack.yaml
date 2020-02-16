@@ -21,6 +21,10 @@ spec:
         volumeMounts:
           - name: mongo-persistent-storage
             mountPath: /data/db
+        resources:
+          requests: # *** specifying requests is a good practice ***
+            memory: 500Mi # this is set based on analysis using kubectl top pod , and decided this to be good memory value to be set
+            cpu: 500m # this is set based on analysis using kubectl top pod , and decided this to be good cpu value to be set
       volumes:
         - name: mongo-persistent-storage
           # pointer to the configuration of HOW we want the mount to be implemented
