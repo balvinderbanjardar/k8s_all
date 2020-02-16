@@ -24,6 +24,8 @@ k get all -n kube-system  // when you execute this you will find a pod and servi
 
 Create Horizontal Pod Autoscaler
 --------------------------------
+Use this link ton create high cpu  utilization: http://192.168.99.101:30080/api/panic
+
 $ kubectl autoscale deployment api-gateway --cpu-percent=400 --min=1 --max=4  //if the avg cpu utilization is more than 400% , then trigger auto scale
 horizontalpodautoscaler.autoscaling/api-gateway autoscaled
 //dont put too much value for max , as in case of DoS attack , things can go crazy , so max value should be set by keeping in my DoS attack
