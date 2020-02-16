@@ -1,0 +1,44 @@
+Minikube commands:
+-----------------
+minikube start --memory 6144
+minikube docker-env
+eval $(minikube docker-env)
+minikube ip
+minikube status
+minikube stop
+minikube delete
+
+minikube addons list
+minikube addons enable metrics-server
+minikube addons enable mdashboard
+minikube mdashboard
+
+Kubectl Commands:
+-----------------
+alias k=kubectl
+
+kubectl top pod
+k top node
+
+k get all -n kube-system  // when you execute this you will find a pod and service created for metrics-server, dashboard..etc  if these addons are enabled
+
+Create Horizontal Pod Autoscaler
+--------------------------------
+$ kubectl autoscale deployment api-gateway --cpu-percent=400 --min=1 --max=4  //if the avg cpu utilization is more than 400% , then trigger auto scale
+horizontalpodautoscaler.autoscaling/api-gateway autoscaled
+//dont put too much value for max , as in case of DoS attack , things can go crazy , so max value should be set by keeping in my DoS attack
+
+$ k get hpa
+NAME          REFERENCE                TARGETS    MINPODS   MAXPODS   REPLICAS   AGE
+api-gateway   Deployment/api-gateway   14%/400%   1         4         1          107s
+
+$ k describe hpa api-gateway
+
+$ k get hpa -o yaml  > autoscaling-rules.yaml // gives you yaml of hpa , use that as template and create other hpa configs for other pods
+
+$ k delete hpa api-gateway
+
+$ k apply -f autoscaling-rules.yaml
+
+
+## Learn More here:  https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/
